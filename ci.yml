@@ -4,7 +4,10 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/android
 
 trigger:
-- main
+  - main
+
+pr:
+  - main
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -21,9 +24,4 @@ steps:
     gradleOptions: '-Xmx3072m'
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'clean bundleRelease'
-- task: CopyFiles@2
-  inputs:
-    contents: '**/*release.aab'
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
-- task: PublishBuildArtifacts@1
+    tasks: 'clean build'
