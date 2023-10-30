@@ -4,6 +4,14 @@ plugins {
 }
 
 android {
+  signingConfigs {
+    create("release") {
+      storeFile = file("../upload-keystore.jks")
+      storePassword = System.getenv("UPLOAD_KEY_PASSWORD")
+      keyAlias = "upload"
+      keyPassword = System.getenv("UPLOAD_KEY_PASSWORD")
+    }
+  }
   namespace = "com.dalvarado.fizzbuzz"
   compileSdk = 33
 
