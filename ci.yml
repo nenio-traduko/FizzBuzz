@@ -25,3 +25,5 @@ steps:
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
     tasks: 'clean build'
+  env:
+    UPLOAD_KEY_PASSWORD: $(UPLOAD_KEY_PASSWORD)
