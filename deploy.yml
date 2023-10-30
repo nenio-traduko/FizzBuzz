@@ -1,0 +1,31 @@
+# Android
+# Build your Android project with Gradle.
+# Add steps that test, sign, and distribute the APK, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/android
+
+trigger: none
+
+pr: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: DownloadBuildArtifacts@1
+  inputs:
+    buildType: 'specific'
+    project: 'a5e85b99-9461-48ad-9a5c-f04a0e7ca939'
+    pipeline: 'fizzbuzz-staging'
+    specificBuildWithTriggering: true
+    buildVersionToDownload: 'latest'
+    downloadType: 'specific'
+    itemPattern: '**/*release.aab'
+    downloadPath: '$(System.ArtifactsDirectory)'
+    cleanDestinationFolder: true
+- task: GooglePlayRelease@4
+  inputs:
+    serviceConnection: 'Google Play Console'
+    applicationId: 'com.dalvarado.fizzbuzz'
+    action: 'SingleBundle'
+    bundleFile: '$(System.ArtifactsDirectory)/**/*release.aab'
+    track: 'internal'

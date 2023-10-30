@@ -5,6 +5,8 @@
 
 trigger: none
 
+pr: none
+
 resources:
   pipelines:
     - pipeline: ci
@@ -30,6 +32,8 @@ steps:
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
     tasks: 'clean bundleRelease'
+  env:
+    UPLOAD_KEY_PASSWORD: $(UPLOAD_KEY_PASSWORD)
 - task: CopyFiles@2
   inputs:
     contents: '**/*release.aab'
