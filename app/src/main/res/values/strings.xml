@@ -1,3 +1,11 @@
 <resources>
   <string name="app_name">FizzBuzz</string>
+  <string name="first_integer_input_label">First Integer</string>
+  <string name="first_word_input_label">First Word</string>
+  <string name="second_integer_input_label">Second Integer</string>
+  <string name="second_word_input_label">Second Word</string>
+  <string name="limit_input_label">Limit</string>
+  <string name="invalid_limit_error_message">Limit is less than largest integer inputted.</string>
+  <string name="invalid_integer_error_message">Integer is invalid or not positive.</string>
+  <string name="invalid_word_error_message">Word contains invalid characters.</string>
 </resources>
