@@ -10,7 +10,7 @@ import com.dalvarado.fizzbuzz.model.SequenceRequestRepository
 import java.math.BigInteger.ZERO
 
 class SequenceRequestViewModel(
-  private val sequenceRequestRepository: SequenceRequestRepository = SequenceRequestRepository()
+  private val sequenceRequestRepository: SequenceRequestRepository = SequenceRequestRepository.INSTANCE
 ): ViewModel() {
   var firstInteger by mutableStateOf("")
     private set
@@ -74,7 +74,7 @@ class SequenceRequestViewModel(
 
   fun onSubmitRequest() {
     if (isRequestValid) {
-      sequenceRequestRepository.addSequenceRequest(
+      sequenceRequestRepository.setSequenceRequest(
         SequenceRequest(
           firstInteger = firstInteger.toBigInteger(),
           firstWord = firstWord,

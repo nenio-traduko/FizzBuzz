@@ -2,8 +2,11 @@ package com.dalvarado.fizzbuzz.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -21,7 +24,8 @@ import com.dalvarado.fizzbuzz.viewmodel.SequenceRequestViewModel
 
 @Composable
 fun SequenceRequestView(
-  viewModel: SequenceRequestViewModel = viewModel()
+  viewModel: SequenceRequestViewModel = viewModel(),
+  onViewSequence: () -> Unit = {}
 ) {
   Scaffold(
     topBar = {
@@ -31,7 +35,10 @@ fun SequenceRequestView(
     }
   ) { padding ->
     Column(
-      Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
+      Modifier
+        .padding(horizontal = 16.dp, vertical = 16.dp)
+        .verticalScroll(rememberScrollState())
+        .fillMaxHeight(),
       verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
       IntegerField(
@@ -68,7 +75,10 @@ fun SequenceRequestView(
         modifier = Modifier
           .fillMaxWidth(fraction = 0.6f)
           .align(Alignment.CenterHorizontally),
-        onClick = viewModel::onSubmitRequest,
+        onClick = {
+          viewModel.onSubmitRequest()
+          onViewSequence()
+        },
         enabled = viewModel.isRequestValid
       ) {
         Text(text = "Submit")
