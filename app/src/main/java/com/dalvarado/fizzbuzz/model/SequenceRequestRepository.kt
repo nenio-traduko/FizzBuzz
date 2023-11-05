@@ -1,13 +1,16 @@
 package com.dalvarado.fizzbuzz.model
 
-import android.util.Log
-
-class SequenceRequestRepository(
-  private val sequenceRequestList: MutableList<SequenceRequest> = mutableListOf()
+class SequenceRequestRepository private constructor(
+  private var sequenceRequest: SequenceRequest = SequenceRequest.EMPTY
 ) {
 
-  fun addSequenceRequest(request: SequenceRequest) {
-    Log.d(null, "Adding sequenceRequest:[$request]")
-    sequenceRequestList.add(request)
+  fun setSequenceRequest(request: SequenceRequest) {
+    sequenceRequest = request
+  }
+
+  fun getSequenceRequest(): SequenceRequest = sequenceRequest
+
+  companion object {
+    val INSTANCE = SequenceRequestRepository()
   }
 }

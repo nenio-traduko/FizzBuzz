@@ -8,4 +8,14 @@ data class SequenceRequest(
   val secondInteger: BigInteger,
   val secondWord: String,
   val sequenceLimit: BigInteger
-)
+) {
+  companion object {
+    val EMPTY = SequenceRequest(
+      firstInteger = BigInteger.ZERO,
+      firstWord = "",
+      secondInteger = BigInteger.ZERO,
+      secondWord = "",
+      sequenceLimit = BigInteger.ZERO
+    )
+  }
+}

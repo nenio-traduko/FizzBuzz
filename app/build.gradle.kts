@@ -19,8 +19,8 @@ android {
     applicationId = "com.dalvarado.fizzbuzz"
     minSdk = 27
     targetSdk = 34
-    versionCode = 2
-    versionName = "1.0.1"
+    versionCode = 3
+    versionName = "1.0.2"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     vectorDrawables {
@@ -56,7 +56,7 @@ android {
 }
 
 dependencies {
-
+  implementation("androidx.navigation:navigation-compose:2.7.5")
   implementation("androidx.core:core-ktx:1.12.0")
   implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
   implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
