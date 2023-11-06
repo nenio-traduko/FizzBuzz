@@ -24,73 +24,74 @@ import com.dalvarado.fizzbuzz.viewmodel.SequenceRequestViewModel
 
 @Composable
 fun SequenceRequestView(
-  viewModel: SequenceRequestViewModel = viewModel(),
-  onViewSequence: () -> Unit = {}
+    viewModel: SequenceRequestViewModel = viewModel(),
+    onViewSequence: () -> Unit = {},
 ) {
-  Scaffold(
-    topBar = {
-      TopAppBar(
-        title = { Text("FizzBuzz") }
-      )
-    }
-  ) { padding ->
-    Column(
-      Modifier
-        .padding(horizontal = 16.dp, vertical = 16.dp)
-        .verticalScroll(rememberScrollState())
-        .fillMaxHeight(),
-      verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-      IntegerField(
-        label = stringResource(id = R.string.first_integer_input_label),
-        value = viewModel.firstInteger,
-        onValueChange = viewModel::onFirstIntegerChanged,
-        isError = !viewModel.isFirstIntegerValid
-      )
-      WordField(
-        label = stringResource(id = R.string.first_word_input_label),
-        value = viewModel.firstWord,
-        onValueChange = viewModel::onFirstWordChanged,
-        isError = !viewModel.isFirstWordValid
-      )
-      IntegerField(
-        label = stringResource(id = R.string.second_integer_input_label),
-        value = viewModel.secondInteger,
-        onValueChange = viewModel::onSecondIntegerChanged,
-        isError = !viewModel.isSecondIntegerValid
-      )
-      WordField(
-        label = stringResource(id = R.string.second_word_input_label),
-        value = viewModel.secondWord,
-        onValueChange = viewModel::onSecondWordChanged,
-        isError = !viewModel.isSecondWordValid
-      )
-      IntegerField(
-        label = stringResource(id = R.string.limit_input_label),
-        value = viewModel.sequenceLimit,
-        onValueChange = viewModel::onSequenceLimitChanged,
-        isError = !viewModel.isSequenceLimitValid
-      )
-      Button(
-        modifier = Modifier
-          .fillMaxWidth(fraction = 0.6f)
-          .align(Alignment.CenterHorizontally),
-        onClick = {
-          viewModel.onSubmitRequest()
-          onViewSequence()
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("FizzBuzz") },
+            )
         },
-        enabled = viewModel.isRequestValid
-      ) {
-        Text(text = "Submit")
-      }
+    ) { padding ->
+        Column(
+            Modifier
+                .padding(horizontal = 16.dp, vertical = 16.dp)
+                .verticalScroll(rememberScrollState())
+                .fillMaxHeight(),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            IntegerField(
+                label = stringResource(id = R.string.first_integer_input_label),
+                value = viewModel.firstInteger,
+                onValueChange = viewModel::onFirstIntegerChanged,
+                isError = !viewModel.isFirstIntegerValid,
+            )
+            WordField(
+                label = stringResource(id = R.string.first_word_input_label),
+                value = viewModel.firstWord,
+                onValueChange = viewModel::onFirstWordChanged,
+                isError = !viewModel.isFirstWordValid,
+            )
+            IntegerField(
+                label = stringResource(id = R.string.second_integer_input_label),
+                value = viewModel.secondInteger,
+                onValueChange = viewModel::onSecondIntegerChanged,
+                isError = !viewModel.isSecondIntegerValid,
+            )
+            WordField(
+                label = stringResource(id = R.string.second_word_input_label),
+                value = viewModel.secondWord,
+                onValueChange = viewModel::onSecondWordChanged,
+                isError = !viewModel.isSecondWordValid,
+            )
+            IntegerField(
+                label = stringResource(id = R.string.limit_input_label),
+                value = viewModel.sequenceLimit,
+                onValueChange = viewModel::onSequenceLimitChanged,
+                isError = !viewModel.isSequenceLimitValid,
+            )
+            Button(
+                modifier =
+                    Modifier
+                        .fillMaxWidth(fraction = 0.6f)
+                        .align(Alignment.CenterHorizontally),
+                onClick = {
+                    viewModel.onSubmitRequest()
+                    onViewSequence()
+                },
+                enabled = viewModel.isRequestValid,
+            ) {
+                Text(text = "Submit")
+            }
+        }
     }
-  }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun SequenceRequestViewPreview() {
-  MaterialTheme {
-    SequenceRequestView()
-  }
+    MaterialTheme {
+        SequenceRequestView()
+    }
 }

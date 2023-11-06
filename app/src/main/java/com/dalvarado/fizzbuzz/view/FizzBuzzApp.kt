@@ -14,38 +14,42 @@ import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun FizzBuzzApp() {
-  val navController = rememberNavController()
-  NavHost(
-    navController = navController,
-    startDestination = "request_view"
-  ) {
-    composable("request_view") {
-      SequenceRequestView(onViewSequence = { navController.navigate("sequence_view") })
-    }
-    composable(
-      "sequence_view",
-      enterTransition = {
-        fadeIn(
-          animationSpec = tween(
-            300, easing = LinearEasing
-          )
-        ) + slideIntoContainer(
-          animationSpec = tween(300, easing = EaseIn),
-          towards = AnimatedContentTransitionScope.SlideDirection.Start
-        )
-      },
-      exitTransition = {
-        fadeOut(
-          animationSpec = tween(
-            300, easing = LinearEasing
-          )
-        ) + slideOutOfContainer(
-          animationSpec = tween(300, easing = EaseOut),
-          towards = AnimatedContentTransitionScope.SlideDirection.End
-        )
-      }
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = "request_view",
     ) {
-      SequenceView(onBack = { navController.popBackStack() })
+        composable("request_view") {
+            SequenceRequestView(onViewSequence = { navController.navigate("sequence_view") })
+        }
+        composable(
+            "sequence_view",
+            enterTransition = {
+                fadeIn(
+                    animationSpec =
+                        tween(
+                            300, easing = LinearEasing,
+                        ),
+                ) +
+                    slideIntoContainer(
+                        animationSpec = tween(300, easing = EaseIn),
+                        towards = AnimatedContentTransitionScope.SlideDirection.Start,
+                    )
+            },
+            exitTransition = {
+                fadeOut(
+                    animationSpec =
+                        tween(
+                            300, easing = LinearEasing,
+                        ),
+                ) +
+                    slideOutOfContainer(
+                        animationSpec = tween(300, easing = EaseOut),
+                        towards = AnimatedContentTransitionScope.SlideDirection.End,
+                    )
+            },
+        ) {
+            SequenceView(onBack = { navController.popBackStack() })
+        }
     }
-  }
 }
