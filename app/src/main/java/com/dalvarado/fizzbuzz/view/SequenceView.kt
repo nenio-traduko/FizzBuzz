@@ -26,45 +26,45 @@ import com.dalvarado.fizzbuzz.viewmodel.SequenceViewModel
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SequenceView(
-  viewModel: SequenceViewModel = viewModel(),
-  onBack: (() -> Unit)? = null
+    viewModel: SequenceViewModel = viewModel(),
+    onBack: (() -> Unit)? = null,
 ) {
-  Scaffold(
-    topBar = {
-      TopAppBar(
-        title = { Text("Sequence") },
-        navigationIcon = {
-          onBack?.let {
-            IconButton(onClick = { it() }) {
-              Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back", tint = MaterialTheme.colors.onPrimary)
-            }
-          }
-        }
-      )
-    }
-  ) { padding ->
-    LazyColumn(Modifier.padding(padding))  {
-      items(viewModel.sequenceList) {sequenceItemText ->
-        ListItem(
-          text = {
-            Text(
-              text = sequenceItemText,
-              fontStyle = FontStyle.Normal,
-              fontWeight = FontWeight.Bold,
-              fontFamily = FontFamily.Serif
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Sequence") },
+                navigationIcon = {
+                    onBack?.let {
+                        IconButton(onClick = { it() }) {
+                            Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back", tint = MaterialTheme.colors.onPrimary)
+                        }
+                    }
+                },
             )
-          }
-        )
-        Divider()
-      }
+        },
+    ) { padding ->
+        LazyColumn(Modifier.padding(padding)) {
+            items(viewModel.sequenceList) { sequenceItemText ->
+                ListItem(
+                    text = {
+                        Text(
+                            text = sequenceItemText,
+                            fontStyle = FontStyle.Normal,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = FontFamily.Serif,
+                        )
+                    },
+                )
+                Divider()
+            }
+        }
     }
-  }
 }
 
 @Preview
 @Composable
 fun SequenceViewPreview() {
-  MaterialTheme {
-    SequenceView()
-  }
+    MaterialTheme {
+        SequenceView()
+    }
 }

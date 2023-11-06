@@ -16,31 +16,36 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.dalvarado.fizzbuzz.R
 
 @Composable
-fun WordField(label: String, value: String, onValueChange: (String) -> Unit = {}, isError: Boolean = false) {
-  Column(
-    Modifier
-      .fillMaxWidth(),
-    horizontalAlignment = Alignment.CenterHorizontally
-  ) {
-    OutlinedTextField(
-      value = value,
-      onValueChange = onValueChange,
-      label = { Text(text = label) },
-      isError = isError,
-      singleLine = true,
-      keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-    )
+fun WordField(
+    label: String,
+    value: String,
+    onValueChange: (String) -> Unit = {},
+    isError: Boolean = false,
+) {
+    Column(
+        Modifier
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            label = { Text(text = label) },
+            isError = isError,
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+        )
 
-    if (isError) {
-      Text(text = stringResource(id = R.string.invalid_word_error_message), color = Color.Red)
+        if (isError) {
+            Text(text = stringResource(id = R.string.invalid_word_error_message), color = Color.Red)
+        }
     }
-  }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun WordFieldPreview() {
-  MaterialTheme {
-    WordField(label = "Test Word", value = "TestInput")
-  }
+    MaterialTheme {
+        WordField(label = "Test Word", value = "TestInput")
+    }
 }

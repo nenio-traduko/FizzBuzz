@@ -16,31 +16,36 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.dalvarado.fizzbuzz.R
 
 @Composable
-fun IntegerField(label: String, value: String, onValueChange: (String) -> Unit = {}, isError: Boolean = false) {
-  Column(
-    Modifier
-      .fillMaxWidth(),
-    horizontalAlignment = Alignment.CenterHorizontally
-  ) {
-    OutlinedTextField(
-      value = value,
-      onValueChange = onValueChange,
-      label = { Text(text = label) },
-      isError = isError,
-      singleLine = true,
-      keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-    )
+fun IntegerField(
+    label: String,
+    value: String,
+    onValueChange: (String) -> Unit = {},
+    isError: Boolean = false,
+) {
+    Column(
+        Modifier
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            label = { Text(text = label) },
+            isError = isError,
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        )
 
-    if (isError) {
-      Text(text = stringResource(id = R.string.invalid_integer_error_message), color = Color.Red)
+        if (isError) {
+            Text(text = stringResource(id = R.string.invalid_integer_error_message), color = Color.Red)
+        }
     }
-  }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun IntegerFieldPreview() {
-  MaterialTheme {
-    IntegerField(label = "Test Number", value = "13")
-  }
+    MaterialTheme {
+        IntegerField(label = "Test Number", value = "13")
+    }
 }

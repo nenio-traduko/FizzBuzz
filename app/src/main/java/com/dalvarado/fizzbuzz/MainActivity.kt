@@ -10,14 +10,14 @@ import androidx.compose.ui.Modifier
 import com.dalvarado.fizzbuzz.view.FizzBuzzApp
 
 class MainActivity : ComponentActivity() {
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContent {
-      MaterialTheme {
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-          FizzBuzzApp()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MaterialTheme {
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+                    FizzBuzzApp()
+                }
+            }
         }
-      }
     }
-  }
 }
