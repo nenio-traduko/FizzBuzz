@@ -14,21 +14,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.dalvarado.fizzbuzz.R
+import com.dalvarado.fizzbuzz.model.ui.TextFieldUIState
 
 @Composable
 fun WordField(
     label: String,
-    value: String,
+    state: TextFieldUIState,
     onValueChange: (String) -> Unit = {},
-    isError: Boolean = false,
 ) {
+    val isError = if (state.isValid == null) false else !state.isValid
     Column(
         Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         OutlinedTextField(
-            value = value,
+            value = state.content,
             onValueChange = onValueChange,
             label = { Text(text = label) },
             isError = isError,
@@ -46,6 +47,6 @@ fun WordField(
 @Composable
 fun WordFieldPreview() {
     MaterialTheme {
-        WordField(label = "Test Word", value = "TestInput")
+        WordField(label = "Test Word", state = TextFieldUIState("Hello"))
     }
 }

@@ -1,86 +1,90 @@
 package com.dalvarado.fizzbuzz.viewmodel
 
 import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.dalvarado.fizzbuzz.model.SequenceRequest
 import com.dalvarado.fizzbuzz.model.SequenceRequestRepository
+import com.dalvarado.fizzbuzz.model.ui.SequenceFormUIState
+import com.dalvarado.fizzbuzz.model.ui.TextFieldUIState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import java.math.BigInteger.ZERO
 
 class SequenceRequestViewModel(
     private val sequenceRequestRepository: SequenceRequestRepository = SequenceRequestRepository.INSTANCE,
 ) : ViewModel() {
-    var firstInteger by mutableStateOf("")
-        private set
+    private val _formState = MutableStateFlow(SequenceFormUIState())
+    val formState: StateFlow<SequenceFormUIState> = _formState
 
-    var isFirstIntegerValid by mutableStateOf(true)
-        private set
-
-    var firstWord by mutableStateOf("")
-        private set
-
-    var isFirstWordValid by mutableStateOf(true)
-        private set
-
-    var secondInteger by mutableStateOf("")
-        private set
-
-    var isSecondIntegerValid by mutableStateOf(true)
-
-    var secondWord by mutableStateOf("")
-        private set
-
-    var isSecondWordValid by mutableStateOf(true)
-        private set
-
-    var sequenceLimit by mutableStateOf("")
-
-    var isSequenceLimitValid by mutableStateOf(true)
-        private set
-
-    val isRequestValid: Boolean
-        get() {
-            return validateSequenceInteger(firstInteger) && validateSequenceWord(firstWord) &&
-                validateSequenceInteger(secondInteger) && validateSequenceWord(secondWord) &&
-                validateSequenceInteger(sequenceLimit)
+    fun onFirstIntegerChanged(content: String) =
+        _formState.apply {
+            value =
+                value.copy(
+                    firstIntegerFieldState =
+                        TextFieldUIState(
+                            content = content,
+                            isValid = validateSequenceInteger(content),
+                        ),
+                )
         }
 
-    fun onFirstIntegerChanged(value: String) {
-        isFirstIntegerValid = validateSequenceInteger(value)
-        firstInteger = value
-    }
+    fun onFirstWordChanged(content: String) =
+        _formState.apply {
+            value =
+                value.copy(
+                    firstWordFieldState =
+                        TextFieldUIState(
+                            content = content,
+                            isValid = validateSequenceWord(content),
+                        ),
+                )
+        }
 
-    fun onFirstWordChanged(value: String) {
-        isFirstWordValid = validateSequenceWord(value)
-        firstWord = value
-    }
+    fun onSecondIntegerChanged(content: String) =
+        _formState.apply {
+            value =
+                value.copy(
+                    secondIntegerFieldState =
+                        TextFieldUIState(
+                            content = content,
+                            isValid = validateSequenceInteger(content),
+                        ),
+                )
+        }
 
-    fun onSecondIntegerChanged(value: String) {
-        isSecondIntegerValid = validateSequenceInteger(value)
-        secondInteger = value
-    }
+    fun onSecondWordChanged(content: String) =
+        _formState.apply {
+            value =
+                value.copy(
+                    secondWordFieldState =
+                        TextFieldUIState(
+                            content = content,
+                            isValid = validateSequenceWord(content),
+                        ),
+                )
+        }
 
-    fun onSecondWordChanged(value: String) {
-        isSecondWordValid = validateSequenceWord(value)
-        secondWord = value
-    }
-
-    fun onSequenceLimitChanged(value: String) {
-        isSequenceLimitValid = validateSequenceInteger(value)
-        sequenceLimit = value
-    }
+    fun onSequenceLimitChanged(content: String) =
+        _formState.apply {
+            value =
+                value.copy(
+                    limitFieldState =
+                        TextFieldUIState(
+                            content = content,
+                            isValid = validateSequenceInteger(content),
+                        ),
+                )
+        }
 
     fun onSubmitRequest() {
-        if (isRequestValid) {
+        if (_formState.value.isValid) {
             sequenceRequestRepository.setSequenceRequest(
                 SequenceRequest(
-                    firstInteger = firstInteger.toBigInteger(),
-                    firstWord = firstWord,
-                    secondInteger = secondInteger.toBigInteger(),
-                    secondWord = secondWord,
-                    sequenceLimit = sequenceLimit.toBigInteger(),
+                    firstInteger = _formState.value.firstIntegerFieldState.content.toBigInteger(),
+                    firstWord = _formState.value.firstWordFieldState.content,
+                    secondInteger = _formState.value.secondIntegerFieldState.content.toBigInteger(),
+                    secondWord = _formState.value.secondWordFieldState.content,
+                    sequenceLimit = _formState.value.limitFieldState.content.toBigInteger(),
                 ),
             )
         }

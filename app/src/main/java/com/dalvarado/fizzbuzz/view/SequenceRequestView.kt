@@ -13,6 +13,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,6 +28,7 @@ fun SequenceRequestView(
     viewModel: SequenceRequestViewModel = viewModel(),
     onViewSequence: () -> Unit = {},
 ) {
+    val uiState = viewModel.formState.collectAsState()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -43,33 +45,28 @@ fun SequenceRequestView(
         ) {
             IntegerField(
                 label = stringResource(id = R.string.first_integer_input_label),
-                value = viewModel.firstInteger,
+                state = uiState.value.firstIntegerFieldState,
                 onValueChange = viewModel::onFirstIntegerChanged,
-                isError = !viewModel.isFirstIntegerValid,
             )
             WordField(
                 label = stringResource(id = R.string.first_word_input_label),
-                value = viewModel.firstWord,
+                state = uiState.value.firstWordFieldState,
                 onValueChange = viewModel::onFirstWordChanged,
-                isError = !viewModel.isFirstWordValid,
             )
             IntegerField(
                 label = stringResource(id = R.string.second_integer_input_label),
-                value = viewModel.secondInteger,
+                state = uiState.value.secondIntegerFieldState,
                 onValueChange = viewModel::onSecondIntegerChanged,
-                isError = !viewModel.isSecondIntegerValid,
             )
             WordField(
                 label = stringResource(id = R.string.second_word_input_label),
-                value = viewModel.secondWord,
+                state = uiState.value.secondWordFieldState,
                 onValueChange = viewModel::onSecondWordChanged,
-                isError = !viewModel.isSecondWordValid,
             )
             IntegerField(
                 label = stringResource(id = R.string.limit_input_label),
-                value = viewModel.sequenceLimit,
+                state = uiState.value.limitFieldState,
                 onValueChange = viewModel::onSequenceLimitChanged,
-                isError = !viewModel.isSequenceLimitValid,
             )
             Button(
                 modifier =
@@ -80,7 +77,7 @@ fun SequenceRequestView(
                     viewModel.onSubmitRequest()
                     onViewSequence()
                 },
-                enabled = viewModel.isRequestValid,
+                enabled = uiState.value.isValid,
             ) {
                 Text(text = "Submit")
             }
