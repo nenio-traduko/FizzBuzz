@@ -79,7 +79,7 @@ fun SequenceRequestView(
                 },
                 enabled = uiState.value.isValid,
             ) {
-                Text(text = "Submit")
+                Text(text = stringResource(id = R.string.submit_button_label))
             }
         }
     }
