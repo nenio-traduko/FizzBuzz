@@ -107,30 +107,29 @@ class SequenceRequestViewModel(
         return if (input.isBlank()) {
             Pair(false, R.string.field_empty_error_message)
         } else {
-            parseAndValidateInteger(input)
+            try {
+                val validInteger = input.toBigInteger()
+                log.info("FizzBuzz", "$input was parsed as an integer.")
+                parseAndValidateInteger(validInteger)
+            } catch (exception: NumberFormatException) {
+                log.error("FizzBuzz", "Error parsing input:[$input] as an integer.")
+                Pair(false, R.string.not_a_number_error_message)
+            }
         }
     }
 
-    private fun parseAndValidateInteger(value: String): Pair<Boolean, Int?> {
-        try {
-            val validInteger = value.toBigInteger()
-            log.info("FizzBuzz", "$value was parsed as an integer.")
-
-            if (MAX_INTEGER < validInteger) {
-                log.debug("FizzBuzz", "The number is not valid because it is too large.")
-                return Pair(false, R.string.number_too_large_error_message)
-            }
-
-            if (validInteger <= BigInteger.ZERO) {
-                log.debug("FizzBuzz", "The number is not valid because it is not positive.")
-                return Pair(false, R.string.non_positive_number_error_message)
-            }
-
-            return Pair(true, null)
-        } catch (exception: NumberFormatException) {
-            log.error("FizzBuzz", "Error parsing input:[$value] as an integer.")
-            return Pair(false, R.string.not_a_number_error_message)
+    private fun parseAndValidateInteger(value: BigInteger): Pair<Boolean, Int?> {
+        if (MAX_INTEGER < value) {
+            log.debug("FizzBuzz", "The number is not valid because it is too large.")
+            return Pair(false, R.string.number_too_large_error_message)
         }
+
+        if (value <= BigInteger.ZERO) {
+            log.debug("FizzBuzz", "The number is not valid because it is not positive.")
+            return Pair(false, R.string.non_positive_number_error_message)
+        }
+
+        return Pair(true, null)
     }
 
     private fun validateWordField(input: String): Pair<Boolean, Int?> {
