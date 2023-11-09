@@ -1,22 +1,20 @@
 package com.dalvarado.fizzbuzz.model
 
-import java.math.BigInteger
-
 data class SequenceRequest(
-    val firstInteger: BigInteger,
+    val firstInteger: Int,
     val firstWord: String,
-    val secondInteger: BigInteger,
+    val secondInteger: Int,
     val secondWord: String,
-    val sequenceLimit: BigInteger,
+    val sequenceLimit: Int,
 ) {
     companion object {
         val EMPTY =
             SequenceRequest(
-                firstInteger = BigInteger.ZERO,
+                firstInteger = 0,
                 firstWord = "",
-                secondInteger = BigInteger.ZERO,
+                secondInteger = 0,
                 secondWord = "",
-                sequenceLimit = BigInteger.ZERO,
+                sequenceLimit = 0,
             )
     }
 }

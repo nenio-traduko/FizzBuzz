@@ -1,9 +1,9 @@
 package com.dalvarado.fizzbuzz.model
 
+import com.dalvarado.fizzbuzz.model.repository.SequenceRequestRepository
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.math.BigInteger
 
 class SequenceRequestRepositoryUnitTest {
     private val subject = SequenceRequestRepository.INSTANCE
@@ -23,11 +23,11 @@ class SequenceRequestRepositoryUnitTest {
     companion object {
         val TEST_REQUEST =
             SequenceRequest(
-                firstInteger = BigInteger("3"),
+                firstInteger = 3,
                 firstWord = "baba",
-                secondInteger = BigInteger("5"),
+                secondInteger = 5,
                 secondWord = "booey",
-                sequenceLimit = BigInteger("1000000"),
+                sequenceLimit = 10000,
             )
     }
 }

@@ -1,17 +1,17 @@
 package com.dalvarado.fizzbuzz.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.dalvarado.fizzbuzz.model.SequenceRepository
-import com.dalvarado.fizzbuzz.model.SequenceRequestRepository
+import com.dalvarado.fizzbuzz.model.repository.SequenceRepository
+import com.dalvarado.fizzbuzz.model.repository.SequenceRequestRepository
+import com.dalvarado.fizzbuzz.model.repository.api.SequenceRequestStore
 
 class SequenceViewModel(
-    sequenceRequestRepository: SequenceRequestRepository = SequenceRequestRepository.INSTANCE,
+    sequenceRequestRepository: SequenceRequestStore = SequenceRequestRepository.INSTANCE,
     sequenceRepository: SequenceRepository = SequenceRepository(),
 ) : ViewModel() {
-    val sequenceList: List<String> =
+    val sequence: Sequence<String> =
         sequenceRepository.getSequence(
             sequenceRequestRepository.getSequenceRequest(),
-        ).map { sequenceItem ->
-            sequenceItem.toString()
-        }.toList()
+        )
+    val sequenceSize: Int = sequenceRequestRepository.getSequenceRequest().sequenceLimit
 }
