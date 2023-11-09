@@ -1,10 +1,9 @@
 package com.dalvarado.fizzbuzz.model
 
+import com.dalvarado.fizzbuzz.model.repository.SequenceRepository
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.math.BigInteger
-import java.util.Random
-import kotlin.math.abs
 
 class SequenceRepositoryUnitTest {
     private val subject: SequenceRepository = SequenceRepository()
@@ -13,39 +12,56 @@ class SequenceRepositoryUnitTest {
     fun `Subject returns a sequence the size of sequence limit`() {
         val sequence = subject.getSequence(TEST_REQUEST)
         val count =
-            sequence.fold(BigInteger.ZERO) { acc, _ ->
-                acc + BigInteger.ONE
+            sequence.fold(0) { acc, _ ->
+                acc + 1
             }
 
         assertEquals(count, TEST_REQUEST.sequenceLimit)
     }
 
     @Test
-    fun `Subject starts at one`() {
+    fun `Subject returns a sequence with first word in place of multiples of first integer`() {
         val sequence = subject.getSequence(TEST_REQUEST)
-        assertEquals(sequence.first(), MultiplesSequenceItem(value = BigInteger.ONE, sequenceRequest = TEST_REQUEST))
+        checkMultiples(
+            of = TEST_REQUEST.firstInteger,
+            upTo = TEST_REQUEST.sequenceLimit,
+            inSequence = sequence,
+            contain = TEST_REQUEST.firstWord,
+        )
     }
 
     @Test
-    fun `Subject increments each sequence element by one`() {
+    fun `Subject returns a sequence with second word in place of multiples of the second integer`() {
         val sequence = subject.getSequence(TEST_REQUEST)
-        var previous: MultiplesSequenceItem? = null
-        sequence.drop(abs(Random().nextInt(9999))).take(6).forEach { item ->
-            previous?.run {
-                assertEquals(this + BigInteger.ONE, item)
-            }
-            previous = item
+        checkMultiples(
+            of = TEST_REQUEST.secondInteger,
+            upTo = TEST_REQUEST.sequenceLimit,
+            inSequence = sequence,
+            contain = TEST_REQUEST.secondWord,
+        )
+    }
+
+    private fun checkMultiples(
+        of: Int,
+        upTo: Int,
+        inSequence: Sequence<String>,
+        contain: String,
+    ) {
+        var currentIndex = of - 1
+        while (currentIndex < upTo) {
+            assertTrue(inSequence.elementAt(currentIndex).contains(contain))
+            currentIndex += of
         }
     }
 
     companion object {
         val TEST_REQUEST =
             SequenceRequest(
-                firstInteger = BigInteger("3"),
+                firstInteger = 3,
                 firstWord = "baba",
-                secondInteger = BigInteger("5"),
+                secondInteger = 5,
                 secondWord = "booey",
-                sequenceLimit = BigInteger("1000000"),
+                sequenceLimit = 10000,
             )
     }
 }

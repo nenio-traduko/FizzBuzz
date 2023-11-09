@@ -2,7 +2,6 @@ package com.dalvarado.fizzbuzz.view
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -44,11 +43,11 @@ fun SequenceView(
         },
     ) { padding ->
         LazyColumn(Modifier.padding(padding)) {
-            items(viewModel.sequenceList) { sequenceItemText ->
+            items(viewModel.sequenceSize) { index ->
                 ListItem(
                     text = {
                         Text(
-                            text = sequenceItemText,
+                            text = viewModel.sequence.elementAt(index),
                             fontStyle = FontStyle.Normal,
                             fontWeight = FontWeight.Bold,
                             fontFamily = FontFamily.Serif,
