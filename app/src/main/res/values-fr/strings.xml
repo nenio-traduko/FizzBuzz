@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">FizzBuzz</string>
+  <string name="first_integer_input_label">Premier entier</string>
+  <string name="first_word_input_label">Premier mot</string>
+  <string name="second_integer_input_label">Deuxième entier</string>
+  <string name="second_word_input_label">Deuxième mot</string>
+  <string name="limit_input_label">Limite</string>
+  <string name="field_empty_error_message">Le champ ne peut pas être vide.</string>
+  <string name="not_a_number_error_message">L\'entrée n\'est pas un nombre entier.</string>
+  <string name="number_too_large_error_message">Le nombre est trop grand.</string>
+  <string name="invalid_word_error_message">L\'entrée contient des caractères non valides.</string>
+  <string name="non_positive_number_error_message">Le nombre doit être positif.</string>
+  <string name="submit_button_label">Envoyer</string>
+</resources>

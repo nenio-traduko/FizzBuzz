@@ -1,5 +1,6 @@
 package com.dalvarado.fizzbuzz.viewmodel
 
+import com.dalvarado.fizzbuzz.R
 import com.dalvarado.fizzbuzz.model.SequenceRequest
 import com.dalvarado.fizzbuzz.model.repository.api.SequenceRequestStore
 import com.dalvarado.fizzbuzz.model.ui.SequenceFormUIState
@@ -14,6 +15,7 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.verifyNoInteractions
+import java.math.BigInteger
 
 class SequenceRequestViewModelUnitTest {
     private lateinit var loggerMock: Logger
@@ -46,7 +48,36 @@ class SequenceRequestViewModelUnitTest {
             subject.onFirstIntegerChanged(invalidInput)
             val uiState = subject.formState.first()
 
-            assertEquals(uiState.firstIntegerFieldState, TextFieldUIState(content = invalidInput, isValid = false))
+            assertEquals(
+                uiState.firstIntegerFieldState,
+                TextFieldUIState(content = invalidInput, isValid = false, errorMessage = R.string.not_a_number_error_message),
+            )
+        }
+
+    @Test
+    fun `Subject returns expected state for non positive first integer input`() =
+        runTest {
+            val invalidInput = "0"
+            subject.onFirstIntegerChanged(invalidInput)
+            val uiState = subject.formState.first()
+
+            assertEquals(
+                uiState.firstIntegerFieldState,
+                TextFieldUIState(content = invalidInput, isValid = false, errorMessage = R.string.non_positive_number_error_message),
+            )
+        }
+
+    @Test
+    fun `Subject returns expected state for large first integer input`() =
+        runTest {
+            val invalidInput = (BigInteger(Integer.MAX_VALUE.toString()) + BigInteger.ONE).toString()
+            subject.onFirstIntegerChanged(invalidInput)
+            val uiState = subject.formState.first()
+
+            assertEquals(
+                uiState.firstIntegerFieldState,
+                TextFieldUIState(content = invalidInput, isValid = false, errorMessage = R.string.number_too_large_error_message),
+            )
         }
 
     @Test
@@ -66,7 +97,36 @@ class SequenceRequestViewModelUnitTest {
             subject.onSecondIntegerChanged(invalidInput)
             val uiState = subject.formState.first()
 
-            assertEquals(uiState.secondIntegerFieldState, TextFieldUIState(content = invalidInput, isValid = false))
+            assertEquals(
+                uiState.secondIntegerFieldState,
+                TextFieldUIState(content = invalidInput, isValid = false, errorMessage = R.string.not_a_number_error_message),
+            )
+        }
+
+    @Test
+    fun `Subject returns expected state for non positive second integer input`() =
+        runTest {
+            val invalidInput = "0"
+            subject.onSecondIntegerChanged(invalidInput)
+            val uiState = subject.formState.first()
+
+            assertEquals(
+                uiState.secondIntegerFieldState,
+                TextFieldUIState(content = invalidInput, isValid = false, errorMessage = R.string.non_positive_number_error_message),
+            )
+        }
+
+    @Test
+    fun `Subject returns expected state for large second integer input`() =
+        runTest {
+            val invalidInput = (BigInteger(Integer.MAX_VALUE.toString()) + BigInteger.ONE).toString()
+            subject.onSecondIntegerChanged(invalidInput)
+            val uiState = subject.formState.first()
+
+            assertEquals(
+                uiState.secondIntegerFieldState,
+                TextFieldUIState(content = invalidInput, isValid = false, errorMessage = R.string.number_too_large_error_message),
+            )
         }
 
     @Test
@@ -86,7 +146,36 @@ class SequenceRequestViewModelUnitTest {
             subject.onSequenceLimitChanged(invalidInput)
             val uiState = subject.formState.first()
 
-            assertEquals(uiState.limitFieldState, TextFieldUIState(content = invalidInput, isValid = false))
+            assertEquals(
+                uiState.limitFieldState,
+                TextFieldUIState(content = invalidInput, isValid = false, errorMessage = R.string.not_a_number_error_message),
+            )
+        }
+
+    @Test
+    fun `Subject returns expected state for non positive limit input`() =
+        runTest {
+            val invalidInput = "0"
+            subject.onSequenceLimitChanged(invalidInput)
+            val uiState = subject.formState.first()
+
+            assertEquals(
+                uiState.limitFieldState,
+                TextFieldUIState(content = invalidInput, isValid = false, errorMessage = R.string.non_positive_number_error_message),
+            )
+        }
+
+    @Test
+    fun `Subject returns expected state for large limit input`() =
+        runTest {
+            val invalidInput = (BigInteger(Integer.MAX_VALUE.toString()) + BigInteger.ONE).toString()
+            subject.onSequenceLimitChanged(invalidInput)
+            val uiState = subject.formState.first()
+
+            assertEquals(
+                uiState.limitFieldState,
+                TextFieldUIState(content = invalidInput, isValid = false, errorMessage = R.string.number_too_large_error_message),
+            )
         }
 
     @Test
@@ -106,7 +195,10 @@ class SequenceRequestViewModelUnitTest {
             subject.onFirstWordChanged(invalidInput)
             val uiState = subject.formState.first()
 
-            assertEquals(uiState.firstWordFieldState, TextFieldUIState(content = invalidInput, isValid = false))
+            assertEquals(
+                uiState.firstWordFieldState,
+                TextFieldUIState(content = invalidInput, isValid = false, errorMessage = R.string.invalid_word_error_message),
+            )
         }
 
     @Test
@@ -126,7 +218,10 @@ class SequenceRequestViewModelUnitTest {
             subject.onSecondWordChanged(invalidInput)
             val uiState = subject.formState.first()
 
-            assertEquals(uiState.secondWordFieldState, TextFieldUIState(content = invalidInput, isValid = false))
+            assertEquals(
+                uiState.secondWordFieldState,
+                TextFieldUIState(content = invalidInput, isValid = false, errorMessage = R.string.invalid_word_error_message),
+            )
         }
 
     @Test

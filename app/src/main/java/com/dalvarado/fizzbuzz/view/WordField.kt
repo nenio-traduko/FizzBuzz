@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import com.dalvarado.fizzbuzz.R
 import com.dalvarado.fizzbuzz.model.ui.TextFieldUIState
 
 @Composable
@@ -37,8 +36,8 @@ fun WordField(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         )
 
-        if (isError) {
-            Text(text = stringResource(id = R.string.invalid_word_error_message), color = Color.Red)
+        if (state.errorMessage != null) {
+            Text(text = stringResource(id = state.errorMessage), color = Color.Red)
         }
     }
 }

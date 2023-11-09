@@ -1,6 +1,7 @@
 package com.dalvarado.fizzbuzz.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.dalvarado.fizzbuzz.R
 import com.dalvarado.fizzbuzz.model.SequenceRequest
 import com.dalvarado.fizzbuzz.model.repository.SequenceRequestRepository
 import com.dalvarado.fizzbuzz.model.repository.api.SequenceRequestStore
@@ -9,6 +10,7 @@ import com.dalvarado.fizzbuzz.model.ui.TextFieldUIState
 import com.dalvarado.fizzbuzz.model.utils.Logger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.math.BigInteger
 
 class SequenceRequestViewModel(
     private val sequenceRequestRepository: SequenceRequestStore = SequenceRequestRepository.INSTANCE,
@@ -19,60 +21,70 @@ class SequenceRequestViewModel(
 
     fun onFirstIntegerChanged(content: String) =
         _formState.apply {
+            val validationResult = validateIntegerField(content)
             value =
                 value.copy(
                     firstIntegerFieldState =
                         TextFieldUIState(
                             content = content,
-                            isValid = validateSequenceInteger(content),
+                            isValid = validationResult.first,
+                            errorMessage = validationResult.second,
                         ),
                 )
         }
 
     fun onFirstWordChanged(content: String) =
         _formState.apply {
+            val validationResult = validateWordField(content)
             value =
                 value.copy(
                     firstWordFieldState =
                         TextFieldUIState(
                             content = content,
-                            isValid = validateSequenceWord(content),
+                            isValid = validationResult.first,
+                            errorMessage = validationResult.second,
                         ),
                 )
         }
 
     fun onSecondIntegerChanged(content: String) =
         _formState.apply {
+            val validationResult = validateIntegerField(content)
             value =
                 value.copy(
                     secondIntegerFieldState =
                         TextFieldUIState(
                             content = content,
-                            isValid = validateSequenceInteger(content),
+                            isValid = validationResult.first,
+                            errorMessage = validationResult.second,
                         ),
                 )
         }
 
     fun onSecondWordChanged(content: String) =
         _formState.apply {
+            val validationResult = validateWordField(content)
             value =
                 value.copy(
                     secondWordFieldState =
                         TextFieldUIState(
                             content = content,
-                            isValid = validateSequenceWord(content),
+                            isValid = validationResult.first,
+                            errorMessage = validationResult.second,
                         ),
                 )
         }
 
     fun onSequenceLimitChanged(content: String) =
         _formState.apply {
+            val validationResult = validateIntegerField(content)
             value =
                 value.copy(
                     limitFieldState =
                         TextFieldUIState(
                             content = content,
-                            isValid = validateSequenceInteger(content),
+                            isValid = validationResult.first,
+                            errorMessage = validationResult.second,
                         ),
                 )
         }
@@ -91,20 +103,46 @@ class SequenceRequestViewModel(
         }
     }
 
-    private fun validateSequenceInteger(value: String): Boolean {
-        return try {
-            val validInteger = value.toInt()
-            log.info("FizzBuzz", "$value was parsed as an integer")
-            validInteger > 0
-        } catch (exception: NumberFormatException) {
-            log.error("FizzBuzz", "Error parsing new integer input:[$value]")
-            false
+    private fun validateIntegerField(input: String): Pair<Boolean, Int?> {
+        return if (input.isBlank()) {
+            Pair(false, R.string.field_empty_error_message)
+        } else {
+            try {
+                val validInteger = input.toBigInteger()
+                log.info("FizzBuzz", "$input was parsed as an integer.")
+                parseAndValidateInteger(validInteger)
+            } catch (exception: NumberFormatException) {
+                log.error("FizzBuzz", "Error parsing input:[$input] as an integer.")
+                Pair(false, R.string.not_a_number_error_message)
+            }
         }
     }
 
-    private fun validateSequenceWord(value: String): Boolean {
-        val validWord = value.matches(Regex("^\\w+$"))
-        log.debug("FizzBuzz", "The word $value is${ if (validWord) " " else " not "}valid")
-        return validWord
+    private fun parseAndValidateInteger(value: BigInteger): Pair<Boolean, Int?> {
+        if (MAX_INTEGER < value) {
+            log.debug("FizzBuzz", "The number is not valid because it is too large.")
+            return Pair(false, R.string.number_too_large_error_message)
+        }
+
+        if (value <= BigInteger.ZERO) {
+            log.debug("FizzBuzz", "The number is not valid because it is not positive.")
+            return Pair(false, R.string.non_positive_number_error_message)
+        }
+
+        return Pair(true, null)
+    }
+
+    private fun validateWordField(input: String): Pair<Boolean, Int?> {
+        return if (input.isBlank()) {
+            Pair(false, R.string.field_empty_error_message)
+        } else {
+            val validWord = input.matches(Regex("^\\w+$"))
+            log.debug("FizzBuzz", "The word $input is${ if (validWord) " " else " not "}valid")
+            Pair(validWord, if (validWord) null else R.string.invalid_word_error_message)
+        }
+    }
+
+    companion object {
+        private val MAX_INTEGER = BigInteger(Int.MAX_VALUE.toString())
     }
 }
