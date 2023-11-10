@@ -1,5 +1,5 @@
 # FizzBuzz
-FizzBuzz is my implementation of the Kreactive FizzBuzz technical challenge and was made as my
+FizzBuzz is my implementation of the FizzBuzz technical challenge and was made as my
 submission for a technical interview.
 
 ## Architecture
