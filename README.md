@@ -33,7 +33,7 @@ sequence.
 ## Trade Offs
 Although entirely possible, I decided not to incorporate the following features:
 
-1. Dependency Injection - the dependencies tree was not complicated enough to rationalize the 
+1. Dependency Injection - the dependency tree was not complicated enough to rationalize the 
 inclusion of a DI framework like Koin or Hilt.
 2. Caching - Since the sequences are represented as type `Sequence`, no computations are done except 
 when absolutely necessary. This is more efficient than serializing or deserializing sets of 
