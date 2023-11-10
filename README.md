@@ -56,4 +56,4 @@ This application is localized to support the following languages:
 * English
 
 ## License
-["License"](./LICENSE)
+[License](./LICENSE)
