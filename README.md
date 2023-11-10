@@ -49,3 +49,11 @@ a `SequenceRequest` stored in memory.
 * The `SequenceRequestRepository` implements the `SequenceRequestStore` interface which is used 
 for a **strategy** design pattern to allow a mock instance of the repository (for testing).
 * The `Logger` class implements an **adapter** pattern.
+
+## Languages Supported
+This application is localized to support the following languages:
+* French
+* English
+
+## License
+["License"](./LICENSE)
