@@ -13,7 +13,9 @@ The sequence request feature allows clients to request a sequence to view, by in
 integers, two words, and a limit for the sequence. The sequence request feature is composed of
 the following classes:
 
+<div style="text-align: center;">
 !["Sequence Request Diagram"](./readme_resources/flow-sequence-request.png)
+</div>
 
 The `SequenceRequestView` interacts with the `SequenceRequestViewModel` to determine the state of
 its components, given any user input. The `SequenceRequestViewModel`, interacts with the 
@@ -23,7 +25,9 @@ its components, given any user input. The `SequenceRequestViewModel`, interacts 
 The sequence view feature allows clients to view the sequence they have requested, by pressing 
 the `Submit` button on valid input. The sequence view feature is composed of the following classes:
 
+<div style="text-align: center;">
 !["Sequence View Diagram"](./readme_resources/flow-sequence-view.png)
+</div>
 
 The `SequenceView` consumes from the `SequenceViewModel` to determine its contents. The
 `SequenceViewModel`, queries the `SequenceRequestRepository` to determine the current 
